@@ -41,7 +41,7 @@ internal class Solution : AdventOfCode.Solution
         return sum;
     }
 
-    private static int AddTogether(int sum, string line)
+    private int AddTogether(int sum, string line)
     {
         var nums = Regex.Replace(line, "[^0-9]", ""); //remove all non-numeric characters
         if (nums.Length > 0)
@@ -52,7 +52,7 @@ internal class Solution : AdventOfCode.Solution
         return sum;
     }
 
-    private static string ConvertSpelledOutToNumber(string spelledOut)
+    private string ConvertSpelledOutToNumber(string spelledOut)
     {
         var spelledOutDigits = new List<string>() { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
