@@ -1,5 +1,8 @@
 ﻿using AdventOfCode;
 using System.Reflection;
+using System.Text;
+
+Console.OutputEncoding = Encoding.UTF8;
 
 var usage = @"
 Usage: dotnet run [year] [day]
@@ -27,7 +30,7 @@ var solution = solutions.FirstOrDefault(s => s.Year == year && s.Day == day);
 
 if (solution is null)
 {
-    Console.WriteLine($"🔎 No solution found for year {year} and day {day}.");
+    Console.WriteLine($"No solution found for year {year} and day {day}.");
     Console.WriteLine(usage);
     return;
 }
