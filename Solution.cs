@@ -19,13 +19,24 @@ internal abstract class Solution
         var stopwatch = new Stopwatch();
         stopwatch.Start();
 
-        var result = Solve(input);
+        var result1 = SolvePart1(input);
 
         stopwatch.Stop();
 
-        Console.WriteLine($"Result: {result}");
+        Console.WriteLine($"Result for Part 1: {result1}");
+        Console.WriteLine($"Elapsed time: {stopwatch.Elapsed}");
+
+        stopwatch.Restart();
+
+        var result2 = SolvePart2(input);
+
+        stopwatch.Stop();
+
+        Console.WriteLine($"Result for Part 2: {result2}");
         Console.WriteLine($"Elapsed time: {stopwatch.Elapsed}");
     }
 
-    protected abstract int Solve(string input);
+    protected abstract int SolvePart1(string input);
+
+    protected abstract int SolvePart2(string input);
 }

@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Y2023.Day1;
+﻿using System.Text.RegularExpressions;
+
+namespace AdventOfCode.Y2023.Day1;
 
 internal class Solution : AdventOfCode.Solution
 {
@@ -8,10 +10,48 @@ internal class Solution : AdventOfCode.Solution
 
     public override string Name => "Trebuchet?!";
 
-    protected override int Solve(string input)
+    protected override int SolvePart1(string input)
     {
-        Console.WriteLine(input);
+        return SolveGeneric(input, @"\d");
+    }
 
-        return 5;
+    protected override int SolvePart2(string input)
+    {
+        return SolveGeneric(input, @"\d|one|two|three|four|five|six|seven|eight|nine");
+    }
+
+    private int SolveGeneric(string input, string regex)
+    {
+        var lines = input.Split(Environment.NewLine);
+
+        var numbers = lines.Select(l =>
+        {
+            var firstMatch = Regex.Match(l, regex).Value;
+            var lastMatch = Regex.Match(l, regex, RegexOptions.RightToLeft).Value;
+            var firstNumber = Parse(firstMatch);
+            var lastNumber = Parse(lastMatch);
+            var number = int.Parse($"{firstNumber}{lastNumber}");
+
+            return number;
+        });
+
+        return numbers.Sum();
+    }
+
+    private int Parse(string match)
+    {
+        return match switch
+        {
+            "one" => 1,
+            "two" => 2,
+            "three" => 3,
+            "four" => 4,
+            "five" => 5,
+            "six" => 6,
+            "seven" => 7,
+            "eight" => 8,
+            "nine" => 9,
+            var number => int.Parse(number),
+        };
     }
 }
