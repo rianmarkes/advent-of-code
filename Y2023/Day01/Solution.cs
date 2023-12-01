@@ -31,7 +31,6 @@ internal class Solution : AdventOfCode.Solution
 
         foreach (var line in lines)
         {
-            // Use a MatchEvaluator delegate to replace matches with numerical values
             var result1 = Regex.Replace(line, pattern, match => ConvertSpelledOutToNumber(match.Value));
             var result2 = Regex.Replace(line, pattern, match => ConvertSpelledOutToNumber(match.Value), RegexOptions.RightToLeft);
             var result = result1 + result2;
@@ -55,13 +54,8 @@ internal class Solution : AdventOfCode.Solution
 
     private static string ConvertSpelledOutToNumber(string spelledOut)
     {
-        // Define a mapping between spelled-out digits and numerical values
         var spelledOutDigits = new List<string>() { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
-        // Find the index of the spelled-out digit in the array
-        var index = spelledOutDigits.IndexOf(spelledOut);
-
-        // return the numerical value
-        return index.ToString() + spelledOut.Substring(spelledOut.Length - 1);
+        return spelledOutDigits.IndexOf(spelledOut).ToString();
     }
 }
