@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace AdventOfCode.Y2023.Day01;
+namespace AdventOfCode.Y2023.Day1;
 
 internal class Solution : AdventOfCode.Solution
 {
@@ -12,46 +12,56 @@ internal class Solution : AdventOfCode.Solution
 
     protected override int SolvePart1(string input)
     {
-        return SolveGeneric(input, @"\d");
+        var sum = 0;
+        var lines = input.Split(Environment.NewLine);
+
+        foreach (var line in lines)
+        {
+            sum = AddTogether(sum, line);
+        }
+
+        return sum;
     }
 
     protected override int SolvePart2(string input)
     {
-        return SolveGeneric(input, @"\d|one|two|three|four|five|six|seven|eight|nine");
-    }
-
-    private int SolveGeneric(string input, string regex)
-    {
+        var sum = 0;
         var lines = input.Split(Environment.NewLine);
+        var pattern = "(zero|one|two|three|four|five|six|seven|eight|nine)";
 
-        var numbers = lines.Select(l =>
+        foreach (var line in lines)
         {
-            var firstMatch = Regex.Match(l, regex).Value;
-            var lastMatch = Regex.Match(l, regex, RegexOptions.RightToLeft).Value;
-            var firstNumber = Parse(firstMatch);
-            var lastNumber = Parse(lastMatch);
-            var number = int.Parse($"{firstNumber}{lastNumber}");
+            // Use a MatchEvaluator delegate to replace matches with numerical values
+            var result1 = Regex.Replace(line, pattern, match => ConvertSpelledOutToNumber(match.Value));
+            var result2 = Regex.Replace(line, pattern, match => ConvertSpelledOutToNumber(match.Value), RegexOptions.RightToLeft);
+            var result = result1 + result2;
 
-            return number;
-        });
+            sum = AddTogether(sum, result);
+        }
 
-        return numbers.Sum();
+        return sum;
     }
 
-    private int Parse(string match)
+    private static int AddTogether(int sum, string line)
     {
-        return match switch
+        var nums = Regex.Replace(line, "[^0-9]", ""); //remove all non-numeric characters
+        if (nums.Length > 0)
         {
-            "one" => 1,
-            "two" => 2,
-            "three" => 3,
-            "four" => 4,
-            "five" => 5,
-            "six" => 6,
-            "seven" => 7,
-            "eight" => 8,
-            "nine" => 9,
-            var number => int.Parse(number),
-        };
+            sum += int.Parse(nums[0] + nums[nums.Length - 1].ToString());
+        }
+
+        return sum;
+    }
+
+    private static string ConvertSpelledOutToNumber(string spelledOut)
+    {
+        // Define a mapping between spelled-out digits and numerical values
+        var spelledOutDigits = new List<string>() { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+
+        // Find the index of the spelled-out digit in the array
+        var index = spelledOutDigits.IndexOf(spelledOut);
+
+        // return the numerical value
+        return index.ToString() + spelledOut.Substring(spelledOut.Length - 1);
     }
 }
