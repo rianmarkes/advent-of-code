@@ -17,4 +17,7 @@
     <EmbeddedResource Remove="bin\**" />
     <None Remove="bin\**" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Y2023\Day02\input.txt" />
+  </ItemGroup>
 </Project>
