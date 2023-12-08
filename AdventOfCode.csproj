@@ -19,5 +19,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Y2023\Day02\input.txt" />
+    <None Remove="Y2023\Day03\input.txt" />
+    <None Remove="Y2023\Day08\input.txt" />
   </ItemGroup>
 </Project>
